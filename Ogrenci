@@ -1,0 +1,241 @@
+namespace OgrenciBilgiSistemi
+    public class Ders
+    {
+{
+        public string Kodu { get; set; }
+        public string Adi { get; set; }
+        public int Kredisi { get; set; }
+        public int DonemSonuPuani { get; set; }
+
+        public Ders(string kodu, string adi, int kredisi, int donemSonuPuani)
+        {
+            Kodu = kodu;
+            Adi = adi;
+            Kredisi = kredisi;
+            DonemSonuPuani = donemSonuPuani;
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OgrenciBilgiSistemi
+{
+   public class DoktoraOgrenci : LisansustuOgrenci
+    {
+
+        public string YuksekLisansUniversiteAdi { get; set; }
+        public string YuksekLisansBolumAdi { get; set; }
+        
+        public DoktoraOgrenci(string lisansUniversiteAdi, string lisansBolumAdi, string yuksekLisansUniversiteAdi, string yuksekLisansBolumAdi)
+           : base(lisansUniversiteAdi, lisansBolumAdi)
+        {
+
+            
+            this.YuksekLisansUniversiteAdi = yuksekLisansUniversiteAdi;
+            this.YuksekLisansBolumAdi = yuksekLisansBolumAdi;
+
+        }
+
+    }
+}
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OgrenciBilgiSistemi
+{
+    class LisansOgrenci : Ogrenci
+    {
+        public LisansOgrenci()
+        {
+
+        }
+    }
+}
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OgrenciBilgiSistemi
+{
+    public class LisansustuOgrenci : Ogrenci
+    {
+        public string LisansUniversiteAdi { get; set; }
+        public string LisansBolumAdi { get; set; }
+
+        public LisansustuOgrenci(string lisansUniversiteAdi, string lisansBolumAdi)
+        {
+            this.LisansUniversiteAdi = lisansUniversiteAdi;
+            this.LisansBolumAdi = lisansBolumAdi;
+        }
+    }
+}
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OgrenciBilgiSistemi
+{
+    public abstract class Ogrenci
+    {
+        public int No { get; set; }
+        public string Ad { get; set; }
+        public string Soyad { get; set; }
+        public string Bolum { get; set; }
+        public List<Ders> AldigiDersler { get; set; }
+       // public Ders [] AldigiDersler { get; set; }
+
+        public Ogrenci() { }
+
+        //public Ogrenci(int no, string ad, string soyad, string bolum, List<Ders> aldigiDersler)
+        //{
+        //    No = no;
+        //    Ad = ad;
+        //    Soyad = soyad;
+        //    Bolum = bolum;
+        //    AldigiDersler = aldigiDersler;
+        //}
+
+        public decimal KumulatifBasariNotuHesapla(List<Ders> AldigiDersler)
+        {
+            int notToplam = 0;
+            int krediToplam = 0;
+            foreach (var ders in AldigiDersler)
+            {
+                notToplam += ders.Kredisi * ders.DonemSonuPuani;
+                krediToplam += ders.Kredisi;
+            }
+            return Convert.ToDecimal(Convert.ToDecimal(notToplam) /Convert.ToDecimal(krediToplam));
+         }  
+      
+      }   
+   }
+      
+      
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OgrenciBilgiSistemi
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            LisansOgrenci lisansOgrenci1 = new LisansOgrenci { No = 2008291014, Ad = "HAMİYET", Soyad = "MANDIRALI", Bolum = "MATEMATİK", AldigiDersler = new List<Ders> 
+                                                                                                                                    { new Ders("MAT101", "Matematik1", 6, 62), 
+                                                                                                                                      new Ders("MAT107", "Soyut Matematik", 6, 60),
+                                                                                                                                      new Ders("FSH333","Hayat Bilgisi", 8,60) } };
+            LisansOgrenci lisansOgrenci2 = new LisansOgrenci {No= 2008291022, Ad="TANER", Soyad="İNER", Bolum="ASTROFİZİK", AldigiDersler=new List<Ders> 
+                                                                                                                                    {new Ders("MAT101","Matematik1",6,95), 
+                                                                                                                                     new Ders("MAT107","Soyut Matematik",6,90), 
+                                                                                                                                     new Ders("FSH333","Hayat Bilgisi", 8, 100), 
+                                                                                                                                     new Ders("AST101" ,"Astrofiziğe Giriş", 12 ,88) } } ;
+
+                                                                    
+            YuksekLisansOgrenci yuksekLisansOgrenci1 = new YuksekLisansOgrenci("İSTANBUL ÜNİVERSİTESİ", "TARİH") {No= 2009291062, Ad="ADİL KEMAL", Soyad="KÜKRER", Bolum="TARİH", AldigiDersler=new List<Ders>
+                                                                                                                                    { new Ders("TAR505","Tatar Tarihi",18,79),
+                                                                                                                                      new Ders("TAR511","Uzakdoğu Halkları",18,100) }};
+            YuksekLisansOgrenci yuksekLisansOgrenci2 = new YuksekLisansOgrenci("DOKUZ EYLÜL ÜNİVERSİTESİ", "BİLGİSAYAR BİLİMLERİ") { No = 2010432000, Ad = "SENEM", Soyad = "BİLGİÇ", Bolum = "BİLGİSAYAR BİLİMLERİ", AldigiDersler = new List<Ders>
+                                                                                                                                          { new Ders("CSC5001", "Fuzzy Data Analysis", 8, 78),
+                                                                                                                                            new Ders("CSC5019", "Software Requirements Engineering", 8, 40),
+                                                                                                                                            new Ders("MAT5101","Applied Mathematics", 9,83 ) }  };
+
+            DoktoraOgrenci doktoraOgrenci1 = new DoktoraOgrenci("EGE ÜNİVERSİTESİ", "BEDEN EĞİTİMİ VE SPOR", "UNVERSITY OF BRITISH COLUMBIA", "KINESIOLOGY" ) {No= 2009291030, Ad="DOĞAÇ",Soyad="SAZAN", Bolum="SPOR BİLİMLERİ", 
+                                                                                                                                 AldigiDersler= new List<Ders> {new Ders("SPB603", "Rehabilitatif Spor", 18, 95),
+                                                                                                                                                                new Ders("SPB630",	"Sporda Sponsorluk", 6 ,100),    } };
+
+            var lisansOgrenciler = new Ogrenci[] { lisansOgrenci1 , lisansOgrenci2, yuksekLisansOgrenci1, yuksekLisansOgrenci2, doktoraOgrenci1 };
+            var yuksekOgrenciler = new YuksekLisansOgrenci[] { yuksekLisansOgrenci1, yuksekLisansOgrenci2 };
+            var doktoraOgrenciler = new DoktoraOgrenci[] { doktoraOgrenci1 };
+           
+            Console.WriteLine("LISANS");
+            foreach (var ogrenci in lisansOgrenciler)
+            {
+                
+                Console.WriteLine(ogrenci.No + "; " + ogrenci.Ad + " " + ogrenci.Soyad + "; " + ogrenci.Bolum);
+                Console.WriteLine("Ders Bilgileri");
+                foreach (var ders in ogrenci.AldigiDersler)
+                {
+                Console.WriteLine(ders.Kodu+ "  "+ ders.Adi+"  "+ ders.Kredisi+" akts   " + ders.DonemSonuPuani);
+                }
+                Console.WriteLine("Kumulatif Başari Puani= " + ogrenci.KumulatifBasariNotuHesapla(ogrenci.AldigiDersler));
+                Console.WriteLine("                       ");
+            }
+            Console.WriteLine("-----------------------------");
+            Console.WriteLine("YUKSEK LISANS");
+            foreach (var ogrenci in yuksekOgrenciler)
+            {
+
+                Console.WriteLine(ogrenci.No + "; " + ogrenci.Ad + " " + ogrenci.Soyad + "; " + ogrenci.Bolum);
+                Console.WriteLine("Lisans Bilgileri");
+                Console.WriteLine(ogrenci.LisansUniversiteAdi + "; "+ ogrenci.LisansBolumAdi);
+                Console.WriteLine("Ders Bilgileri");
+                foreach (var ders in ogrenci.AldigiDersler)
+                {
+                    Console.WriteLine(ders.Kodu + "  " + ders.Adi + "  " + ders.Kredisi + " akts   " + ders.DonemSonuPuani);
+                }
+                Console.WriteLine("Kumulatif Başari Puani= " + ogrenci.KumulatifBasariNotuHesapla(ogrenci.AldigiDersler));
+                Console.WriteLine("                                   ");
+            }
+            Console.WriteLine("-----------------------------");
+            Console.WriteLine("DOKTORA");
+            foreach (var ogrenci in doktoraOgrenciler)
+            {
+
+                Console.WriteLine(ogrenci.No + "; " + ogrenci.Ad + " " + ogrenci.Soyad + "; " + ogrenci.Bolum);
+                Console.WriteLine("Lisans Bilgileri");
+                Console.WriteLine(ogrenci.LisansUniversiteAdi + "; " + ogrenci.LisansBolumAdi);
+                Console.WriteLine("Yüksek Lisans Bilgileri");
+                Console.WriteLine(ogrenci.YuksekLisansUniversiteAdi + "; " + ogrenci.YuksekLisansBolumAdi);
+                Console.WriteLine("Ders Bilgileri");
+                foreach (var ders in ogrenci.AldigiDersler)
+                {
+                    Console.WriteLine(ders.Kodu + "  " + ders.Adi + "  " + ders.Kredisi + " akts   " + ders.DonemSonuPuani);
+                }
+                Console.WriteLine("Kumulatif Başari Puani= " + ogrenci.KumulatifBasariNotuHesapla(ogrenci.AldigiDersler));
+                Console.WriteLine("                                   ");
+            }
+
+
+        }
+    }
+}
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OgrenciBilgiSistemi
+{
+    public class YuksekLisansOgrenci : LisansustuOgrenci
+    {
+       
+
+        public YuksekLisansOgrenci(string lisansUniversiteAdi, string lisansBolumAdi) : base(lisansUniversiteAdi,lisansBolumAdi )
+        {
+           
+        }
+
+
+    }
+}
